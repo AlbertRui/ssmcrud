@@ -12,6 +12,7 @@
     </context-param>
 
     <!-- Bootstraps the root web application context before servlet initialization -->
+    <!--org.springframework.web.context.ContextLoaderListener-->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>

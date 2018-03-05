@@ -13,13 +13,9 @@
     以/开始的相对路径，找资源，以服务器的路径为标准(http://localhost:3306)；需要加上项目名
             http://localhost:3306/crud
      -->
-    <script type="text/javascript"
-            src="${APP_PATH }/static/js/jquery-1.12.4.min.js"></script>
-    <link
-            href="${APP_PATH }/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"
-            rel="stylesheet">
-    <script
-            src="${APP_PATH }/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${APP_PATH }/static/js/jquery-1.12.4.min.js"></script>
+    <link href="${APP_PATH }/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="${APP_PATH }/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
 <!-- 员工修改的模态框 -->
@@ -101,7 +97,7 @@
                         <label class="col-sm-2 control-label">email</label>
                         <div class="col-sm-10">
                             <input type="text" name="email" class="form-control" id="email_add_input"
-                                   placeholder="email@atguigu.com">
+                                   placeholder="email@163.com">
                             <span class="help-block"></span>
                         </div>
                     </div>
@@ -157,7 +153,7 @@
                 <thead>
                 <tr>
                     <th>
-                        <input type="checkbox" id="check_all"/>
+                        <input type="checkbox" id="check_all" title=""/>
                     </th>
                     <th>#</th>
                     <th>empName</th>
@@ -213,13 +209,13 @@
 
     function build_emps_table(result) {
         //清空table表格
-        $("#emps_table tbody").empty();
+        $("#emps_table").find("tbody").empty();
         var emps = result.extend.pageInfo.list;
         $.each(emps, function (index, item) {
             var checkBoxTd = $("<td><input type='checkbox' class='check_item'/></td>");
             var empIdTd = $("<td></td>").append(item.empId);
             var empNameTd = $("<td></td>").append(item.empName);
-            var genderTd = $("<td></td>").append(item.gender == 'M' ? "男" : "女");
+            var genderTd = $("<td></td>").append(item.gender === 'M' ? "男" : "女");
             var emailTd = $("<td></td>").append(item.email);
             var deptNameTd = $("<td></td>").append(item.department.deptName);
             /**
@@ -375,7 +371,6 @@
         } else {
             show_validate_msg("#empName_add_input", "success", "");
         }
-        ;
 
         //2、校验邮箱信息
         var email = $("#email_add_input").val();
