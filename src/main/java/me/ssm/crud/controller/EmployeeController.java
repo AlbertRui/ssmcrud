@@ -33,27 +33,43 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     /**
+     * 检查用户名是否可用
+     *
+     * @param empName
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/checkuser")
+    public Msg checkUser(@RequestParam("empName") String empName) {
+        boolean b = employeeService.checkUser(empName);
+        if (b) {
+            return Msg.success();
+        } else {
+            return Msg.fail();
+        }
+    }
+
+    /**
      * 员工保存
      * 1、支持JSR303校验
      * 2、导入Hibernate-Validator
      *
-     *
      * @return
      */
-    @RequestMapping(value="/emp",method= RequestMethod.POST)
+    @RequestMapping(value = "/emp", method = RequestMethod.POST)
     @ResponseBody
-    public Msg saveEmp(@Valid Employee employee, BindingResult result){
-        if(result.hasErrors()){
+    public Msg saveEmp(@Valid Employee employee, BindingResult result) {
+        if (result.hasErrors()) {
             //校验失败，应该返回失败，在模态框中显示校验失败的错误信息
             Map<String, Object> map = new HashMap<>();
             List<FieldError> errors = result.getFieldErrors();
             for (FieldError fieldError : errors) {
-                System.out.println("错误的字段名："+fieldError.getField());
-                System.out.println("错误信息："+fieldError.getDefaultMessage());
+                System.out.println("错误的字段名：" + fieldError.getField());
+                System.out.println("错误信息：" + fieldError.getDefaultMessage());
                 map.put(fieldError.getField(), fieldError.getDefaultMessage());
             }
             return Msg.fail().add("errorFields", map);
-        }else{
+        } else {
             employeeService.saveEmp(employee);
             return Msg.success();
         }
@@ -62,6 +78,7 @@ public class EmployeeController {
 
     /**
      * 导入jackson包。
+     *
      * @param pn
      * @return
      */
